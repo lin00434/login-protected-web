@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">	
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Loging Page</title>
+    <style type="text/css">
+        .jumbotron {
+            text-align: center;
+        }
+	.div {
+	    text-align: center;
+	}
+    </style>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="crossorigin="anonymous">
+      </script>
+ </head>
+ 
+ <body>
+    <div class="jumbotron" style="background: DarkSeaGreen !important">
+
+    <h1> Login Page</h1>
+    <p>Please enter your user name and password. Both are case sensitive.</p>
+    </div>
+	
+	<div class="div">
+    		<form id="myForm" name="myForm">
+		<div>
+			<label for="login">Username:</label>
+			<input type="text" id="login" name="login" placeholder="Username">
+		</div>
+		 
+		<div>
+		   	<label for="password">Password:</label>
+		   	<input type="text" id="password" name="password" placeholder="Password">
+		</div>
+		<p id="errMsg"></p>
+		<button type="submit" value="submit" style="background: lightblue">Log in</button>
+	</form>
+	</div>
+	
+   <script>
+     $(document).ready(function () {
+         $('#myForm').submit(function (event) {
+	 	event.preventDefault();
+
+		//collect the form data using Id Selector for whatever data you need to send to server
+		let login= $('#login').val();
+		let password= $('#password').val();
+		
+		$.post('/postLoginEntry',
+		{"login": login, "password": password},
+	 	(data) => {
+		 	  if (data.status === 'success') {
+			    window.location.href = '/contacts';
+			  }
+		 	  else {
+		 	    //Display error message
+		 	    $('#errMsg').html("<span style='color:red;'>Invalid credentials. Please try again!</span>");
+		 	  }
+	 	});
+         });
+     });
+   </script>
+   
+ </body>
+
+</html>
